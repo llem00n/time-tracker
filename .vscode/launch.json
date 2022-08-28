@@ -1,0 +1,25 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+	  {
+		"name": "Debug Renderer",
+		"port": 9222,
+		"request": "attach",
+		"type": "pwa-chrome",
+		"webRoot": "${workspaceFolder}",
+	  },
+	  {
+		"name": "Debug Main Process",
+		"type": "pwa-node",
+		"request": "launch",
+		"cwd": "${workspaceFolder}",
+		"runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+		"windows": {
+		  "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+		},
+		"args": [".", "--remote-debugging-port=9222"],
+		"outputCapture": "std",
+		"console": "integratedTerminal",
+	  }
+	]
+  }

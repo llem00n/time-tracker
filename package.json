@@ -1,0 +1,17 @@
+{
+  "name": "time-tracker",
+  "version": "0.0.0",
+  "description": "App to track your working hours",
+  "main": "index.js",
+  "scripts": {
+    "test": "electron ."
+  },
+  "author": "llem00n",
+  "license": "AGPL-3.0-or-later",
+  "devDependencies": {
+    "electron": "^20.0.2"
+  },
+  "dependencies": {
+    "screenz": "^1.0.0"
+  }
+}

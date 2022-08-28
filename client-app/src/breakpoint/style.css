@@ -1,0 +1,85 @@
+@font-face {
+	font-family: NotoSerif;
+	src: url('./../../res/NotoSerif.ttf');
+}
+
+html, button, input {
+	font-family: NotoSerif;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.window {
+	border-radius: 3px;
+	background-color: white;
+	height: 100%;
+}
+
+.title-container {
+	padding: 10px 15px 10px 15px;
+	background-color: #f0f0f0;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	margin-bottom: 10px;
+	-webkit-app-region: drag;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.title {
+	font-size: 25px;
+}
+
+.contents-container {
+	padding: 0px 15px 15px
+}
+
+.form {
+	margin-bottom: 10px;
+	width: 100%
+}
+
+.input-label {
+	font-size: 15px;
+}
+
+.form-field {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.input {
+    border: 1px solid #afafaf;
+    border-radius: 3px;
+	outline: #aaaaaa;
+	transition: background-color 150ms;
+}
+
+.input:focus {
+	background-color: #f0f0f0;
+}
+
+.actions {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.action-button {
+    margin-left: 5px;
+    font-family: NotoSerif;
+    background: none;
+    border: 1px solid #afafaf;
+    border-radius: 3px;
+	background-color: #ffffff;
+	outline: none;
+	transition: background-color 150ms;
+}
+
+.action-button:hover, .action-button:focus {
+	background-color: #f0f0f0;
+}

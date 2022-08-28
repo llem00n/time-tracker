@@ -1,0 +1,98 @@
+@font-face {
+	font-family: NotoSerif;
+	src: url('./../../res/NotoSerif.ttf');
+}
+
+html, button, input {
+	font-family: NotoSerif;
+}
+
+input, button {
+	outline: none
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.window {
+	border-radius: 3px;
+	background-color: white;
+}
+
+html, body, .window {
+	height: 100%;
+}
+
+.hidden {
+	display: none;
+}
+
+.title-container {
+	padding: 10px 15px 10px 15px;
+	background-color: #f0f0f0;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	margin-bottom: 10px;
+	-webkit-app-region: drag;
+	-webkit-user-select: none;
+	user-select: none;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.title {
+	font-size: 25px;
+}
+
+.titlebar-button {
+	-webkit-app-region: none;
+	border: none;
+	border-radius: 3px;
+	transition: background-color, border 150ms;
+}
+
+.titlebar-button:hover, .titlebar-button:focus {
+	background-color: #f0f0f0;
+	border: 1px solid #b0b0b0
+}
+
+.contents {
+	padding: 5px 15px;
+}
+
+.date-selection-bar {
+	display: grid;
+	grid-template-columns: 1fr 2fr 1fr;
+}
+
+.date-selection-bar .inputs-container {
+	display: flex;
+	justify-content: center;
+}
+
+.date-input {
+	margin: 0 5px;
+}
+
+.days {
+	overflow: auto;
+}
+
+.day-title {
+    font-size: 20px;
+    font-weight: 100;
+	margin: 5px 0;
+}
+
+.breakpoint-comment {
+    color: #808080;
+    font-size: 12px;
+	margin-left: 5px;
+}
+
+.day-break {
+    border-top: 1px solid #f0f0f0;
+}

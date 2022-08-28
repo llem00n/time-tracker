@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./styles.css">
+	<title>Breakpoints</title>
+</head>
+<body>
+	<div class="window">
+		<div class="title-container">
+			<span class="title">Review breakpoints</span>
+			<div class="actions-container">
+				<button class="close-button titlebar-button">Close</button>
+			</div>
+		</div>
+		<div class="contents">
+			<div class="date-selection-bar">
+				<div class="checkbox-container">
+					<input type="checkbox" oninput="onRangeCheckboxClick(this.checked)" id="range-checkbox">
+					<label for="range-checkbox">Range</label>
+				</div>
+				<div class="inputs-container">
+					<input type="date" id="first-date" class="date-input" oninput="requestBreakpoints()">
+					<input type="date" id="second-date" class="date-input hidden" oninput="requestBreakpoints()">
+				</div>
+				<div class="last-grid-element"></div>
+			</div>
+			<div class="days" id="days"></div>
+		</div>
+	</div>
+	<script src="./index.js"></script>
+</body>
+</html>
