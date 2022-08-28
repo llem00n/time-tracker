@@ -53,7 +53,7 @@ class Application {
 	}
 	
 	#createTrayIcon() {
-		this.#icon = new Tray(path.join(__dirname, process.platform === 'win32' ? './res/icon.ico' : '.res/icon.png'))
+		this.#icon = new Tray(path.join(__dirname, process.platform === 'win32' ? '/res/icon.ico' : './res/icon.png'))
 		const contextMenu = Menu.buildFromTemplate([
 			{ label: 'Breakpoint', type: 'normal', click: () => { this.#breakpointClick() } },
 			{ label: 'Review', type: 'normal', click: () => { this.#reviewClick() } },
