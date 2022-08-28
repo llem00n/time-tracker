@@ -31,7 +31,7 @@ class Application {
 			event.preventDefault();
 			this.#breakpointWindow.hide();
 		})
-		this.#breakpointWindow.loadFile('./client-app/src/breakpoint/index.html')
+		this.#breakpointWindow.loadFile(path.join(__dirname, './client-app/src/breakpoint/index.html'))
 	}
 
 	#createReviewWindow() {
@@ -49,11 +49,11 @@ class Application {
 			event.preventDefault();
 			this.#reviewWindow.hide();
 		})
-		this.#reviewWindow.loadFile('./client-app/src/review/index.html')
+		this.#reviewWindow.loadFile(path.join(__dirname, './client-app/src/review/index.html'))
 	}
 	
 	#createTrayIcon() {
-		this.#icon = new Tray('./res/icon.ico')
+		this.#icon = new Tray(path.join(__dirname, './res/icon.ico'))
 		const contextMenu = Menu.buildFromTemplate([
 			{ label: 'Breakpoint', type: 'normal', click: () => { this.#breakpointClick() } },
 			{ label: 'Review', type: 'normal', click: () => { this.#reviewClick() } },

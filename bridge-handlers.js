@@ -19,11 +19,11 @@ function registerbreakpointActionHandlers() {
 		window.hide();
 
 		const date = new Date().toJSON();
-		const filename = `./breakpoints/breakpoints-${date.split('T')[0]}`;
+		const filename = path.join(__dirname, `./breakpoints/breakpoints-${date.split('T')[0]}`);
 		const actionData = { date, action, comment }
 
-		if (!fs.existsSync('./breakpoints')){
-			fs.mkdirSync('./breakpoints', { recursive: true });
+		if (!fs.existsSync(path.join(__dirname, './breakpoints'))){
+			fs.mkdirSync(path.join(__dirname, './breakpoints'), { recursive: true });
 		}
 
 		let fileContents = null
@@ -42,13 +42,13 @@ function registerbreakpointActionHandlers() {
 
 function registerReviewActionHandlers() {
 	ipcMain.handle('review-request-breakpoints', (event, firstDate, secondDate) => {
-		if (!fs.existsSync('./breakpoints')) return {}
+		if (!fs.existsSync(path.join(__dirname, './breakpoints'))) return {}
 
 		const result = {}
 		let date = firstDate;
 		if (!secondDate) secondDate = new Date(firstDate.getTime());
 		for(; date.getTime() <= secondDate.getTime(); date.setDate(date.getDate() + 1)) {
-			const filename = `./breakpoints/breakpoints-${date.toJSON().split('T')[0]}`;
+			const filename = path.join(__dirname, `./breakpoints/breakpoints-${date.toJSON().split('T')[0]}`);
 			if (!fs.existsSync(filename)) continue;
 			const fileData = fs.readFileSync(filename);
 			result[date.getTime()] = JSON.parse(fileData)

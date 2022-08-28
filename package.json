@@ -10,8 +10,5 @@
   "license": "AGPL-3.0-or-later",
   "devDependencies": {
     "electron": "^20.0.2"
-  },
-  "dependencies": {
-    "screenz": "^1.0.0"
   }
 }
