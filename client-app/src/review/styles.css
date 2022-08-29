@@ -3,6 +3,10 @@
 	src: url('./../../res/NotoSerif.ttf');
 }
 
+html {
+	height: 100%;
+}
+
 html, button, input {
 	font-family: NotoSerif;
 }
@@ -13,16 +17,17 @@ input, button {
 
 body {
 	margin: 0;
-	padding: 0;
+	padding: 10px;
+	height: -webkit-fill-available;
 }
 
 .window {
+	height: -webkit-fill-available;
 	border-radius: 3px;
 	background-color: white;
-}
-
-html, body, .window {
-	height: 100%;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	display: flex;
+	flex-direction: column;
 }
 
 .hidden {
@@ -49,18 +54,21 @@ html, body, .window {
 
 .titlebar-button {
 	-webkit-app-region: none;
-	border: none;
+	border: 1px solid transparent;
 	border-radius: 3px;
-	transition: background-color, border 150ms;
+	padding: 5px 10px;
+	transition: background-color, border 300ms;
 }
 
 .titlebar-button:hover, .titlebar-button:focus {
-	background-color: #f0f0f0;
-	border: 1px solid #b0b0b0
+	background-color: #ffffff;
+	border: 1px solid #c0c0c0
 }
 
 .contents {
 	padding: 5px 15px;
+	max-height: -webkit-fill-available;
+	flex: 1;
 }
 
 .date-selection-bar {
@@ -75,10 +83,14 @@ html, body, .window {
 
 .date-input {
 	margin: 0 5px;
+	padding: 2px 10px;
+	border-radius: 3px;
+	border: 1px solid #909090;
 }
 
 .days {
-	overflow: auto;
+	overflow-y: auto;
+	max-height: 450px;
 }
 
 .day-title {
@@ -87,12 +99,21 @@ html, body, .window {
 	margin: 5px 0;
 }
 
+.day-date {
+	font-size: 12px;
+	color: #808080;
+}
+
+.breakpoint {
+	padding-left: 15px;
+}
+
 .breakpoint-comment {
     color: #808080;
     font-size: 12px;
-	margin-left: 5px;
 }
 
 .day-break {
     border-top: 1px solid #f0f0f0;
+	width: 80%
 }

@@ -16,7 +16,7 @@ function onRangeCheckboxClick(checked) {
 
 function requestBreakpoints() {
 	const isRange = checkbox.checked;
-	const a = window.api.requestBreakpoints(new Date(firstDate.valueAsNumber), isRange ? new Date(secondDate.valueAsNumber) : false)
+	window.api.requestBreakpoints(new Date(firstDate.valueAsNumber), isRange ? new Date(secondDate.valueAsNumber) : false)
 		.then(response => applyBreakpointsRequest(response))
 }
 
@@ -30,7 +30,13 @@ function applyBreakpointsRequest(breakpoints) {
 		dayElement.classList.add('day');
 		const dayTitleElement = document.createElement('p');
 		dayTitleElement.classList.add('day-title')
-		dayTitleElement.innerText = new Array('SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT')[new Date(Number.parseInt(key)).getDay()]
+		dayTitleElement.innerText = new Array('SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT')[new Date(Number.parseInt(key)).getDay()] + ' '
+		
+		const dayDateElement = document.createElement('span');
+		dayDateElement.classList.add('day-date')
+		dayDateElement.innerText = new Date(Number.parseInt(key)).toLocaleDateString()
+		dayTitleElement.appendChild(dayDateElement)
+
 		dayElement.appendChild(dayTitleElement)
 
 		for (let breakpoint of day) {
@@ -39,11 +45,11 @@ function applyBreakpointsRequest(breakpoints) {
 
 			const timeElement = document.createElement('span');
 			timeElement.classList.add('breakpoint-time')
-			timeElement.innerText = `${new Date(breakpoint.date).getHours()}:${new Date(breakpoint.date).getMinutes()} - `
+			timeElement.innerText = `${getTimeString(new Date(breakpoint.date))} - `
 
 			const actionElement = document.createElement('span');
 			actionElement.classList.add('breakpoint-action')
-			actionElement.innerText = breakpoint.action
+			actionElement.innerText = breakpoint.action + ' '
 
 			const commentElement = document.createElement('span')
 			commentElement.classList.add('breakpoint-comment')
@@ -62,5 +68,24 @@ function applyBreakpointsRequest(breakpoints) {
 		daysElement.appendChild(dayElement);
 	}
 }
+
+function getTimeString(date) {
+	let hours = date.getHours().toString();
+	hours = '0'.repeat(2 - hours.length) + hours;
+
+	let minutes = date.getMinutes().toString();
+	minutes = '0'.repeat(2 - minutes.length) + minutes;
+
+	return `${hours}:${minutes}`
+}
+
+function onClose(button) {
+	window.api.close();
+	button.blur();
+}
+
+window.api.onload(() => {
+	requestBreakpoints();
+})
 
 requestBreakpoints();

@@ -12,11 +12,11 @@
 		<div class="title-container">
 			<span class="title">Review breakpoints</span>
 			<div class="actions-container">
-				<button class="close-button titlebar-button">Close</button>
+				<button class="close-button titlebar-button" onclick="onClose(this)">Close</button>
 			</div>
 		</div>
 		<div class="contents">
-			<div class="date-selection-bar">
+			<div class="date-selection-bar" id="date-selection-bar">
 				<div class="checkbox-container">
 					<input type="checkbox" oninput="onRangeCheckboxClick(this.checked)" id="range-checkbox">
 					<label for="range-checkbox">Range</label>

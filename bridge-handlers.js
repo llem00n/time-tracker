@@ -56,6 +56,11 @@ function registerReviewActionHandlers() {
 
 		return result;
 	})
+
+	ipcMain.handle('review-close', () => {
+		const window = BrowserWindow.getFocusedWindow();
+		window.hide();
+	})
 }
 
 module.exports = {

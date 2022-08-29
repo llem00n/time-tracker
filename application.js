@@ -1,6 +1,7 @@
 const { app, BrowserWindow, Menu, Tray, ipcMain } = require('electron')
 const path = require('path')
 const { registerIpcHandlers } = require('./bridge-handlers.js')
+const AutoLaunch = require('auto-launch')
 
 class Application {
 	#breakpointWindow = null;
@@ -9,22 +10,24 @@ class Application {
 
 	init() {
 		app.whenReady()
-			.then(() => {this.#createTrayIcon() })
+			.then(() => { this.#createTrayIcon() })
 			.then(() => { this.#createBreakpointWindow() })
 			.then(() => { this.#createReviewWindow() })
 			.then(() => { registerIpcHandlers() })
+			.then(() => { this.#checkAutoLaunch() })
 	}
 
 	#createBreakpointWindow() {
 		this.#breakpointWindow = new BrowserWindow({
-			width: 310,
-			height: 162,
+			width: 320,
+			height: 175,
 			frame: false,
 			show: false,
 			transparent: true,
 			resizable: false,
 			webPreferences: {
-				preload: path.join(__dirname, 'breakpoint-bridge.js')
+				preload: path.join(__dirname, 'breakpoint-bridge.js'),
+				devTools: false,
 			}
 		})
 		this.#breakpointWindow.on('close', (event) => {
@@ -41,8 +44,10 @@ class Application {
 			frame:	false,
 			show: false,
 			transparent: true,
+			resizable: false,
 			webPreferences: {
-				preload: path.join(__dirname, 'review-bridge.js')
+				preload: path.join(__dirname, 'review-bridge.js'),
+				devTools: false,
 			}
 		});
 		this.#reviewWindow.on('close', (event) => {
@@ -62,10 +67,13 @@ class Application {
 		this.#icon.setToolTip('Time tracker');
 		this.#icon.setTitle('Time tracker');
 		this.#icon.setContextMenu(contextMenu);
+		this.#icon.on('click', () => {
+			this.#icon.popUpContextMenu()
+		})
 	}
 
 	#exitClick() {
-		app.quit()
+		app.exit()
 	}
 
 	#breakpointClick() {
@@ -74,7 +82,20 @@ class Application {
 
 	#reviewClick() {
 		this.#reviewWindow.show();
-		this.#reviewWindow.webContents.send('onload', 'hello')
+		this.#reviewWindow.webContents.send('review-onload')
+	}
+
+	#checkAutoLaunch() {
+		const autoLauncher = new AutoLaunch({
+			name: 'Time tracker',
+			path: app.getPath('exe')
+		})
+
+		autoLauncher.isEnabled()
+			.then((isEnabled) => {
+				if (isEnabled) return;
+				autoLauncher.enable();
+			})
 	}
 }
 

@@ -8,7 +8,11 @@ function onCancelClick() {
 }
 
 function onSaveClick() {
-	window.actions.save(action.value, comment.value)
+	if (!action.value && !comment.value)
+		window.actions.cancel();
+	else
+		window.actions.save(action.value, comment.value)
+		
 	action.value = ''
 	comment.value = ''
 }
