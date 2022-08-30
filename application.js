@@ -7,9 +7,12 @@ class Application {
 	#breakpointWindow = null;
 	#reviewWindow = null;
 	#icon = null;
+	#iconContextMenu = null;
+	#autoLauncher = null;
 
 	init() {
 		app.whenReady()
+			.then(() => { this.#initAutoLauncher() })
 			.then(() => { this.#createTrayIcon() })
 			.then(() => { this.#createBreakpointWindow() })
 			.then(() => { this.#createReviewWindow() })
@@ -59,14 +62,15 @@ class Application {
 	
 	#createTrayIcon() {
 		this.#icon = new Tray(path.join(__dirname, process.platform === 'win32' ? '/res/icon.ico' : './res/icon.png'))
-		const contextMenu = Menu.buildFromTemplate([
+		this.#iconContextMenu = Menu.buildFromTemplate([
 			{ label: 'Breakpoint', type: 'normal', click: () => { this.#breakpointClick() } },
 			{ label: 'Review', type: 'normal', click: () => { this.#reviewClick() } },
+			{ label: 'Autostart', type: 'checkbox', checked: false, click: () => { this.#toggleAutoLaunch() } },
 			{ label: 'Exit', type: 'normal', click: () => { this.#exitClick() } },
 		])
 		this.#icon.setToolTip('Time tracker');
 		this.#icon.setTitle('Time tracker');
-		this.#icon.setContextMenu(contextMenu);
+		this.#icon.setContextMenu(this.#iconContextMenu);
 		this.#icon.on('click', () => {
 			this.#icon.popUpContextMenu()
 		})
@@ -85,16 +89,36 @@ class Application {
 		this.#reviewWindow.webContents.send('review-onload')
 	}
 
-	#checkAutoLaunch() {
-		const autoLauncher = new AutoLaunch({
+	#initAutoLauncher() {
+		this.#autoLauncher = new AutoLaunch({
 			name: 'Time tracker',
 			path: app.getPath('exe')
 		})
+	}
 
-		autoLauncher.isEnabled()
-			.then((isEnabled) => {
-				if (isEnabled) return;
-				autoLauncher.enable();
+	#checkAutoLaunch() {
+		if (!this.#autoLauncher) return;
+
+		this.#autoLauncher.isEnabled()
+			.then(isEnabled => {
+				if (isEnabled) {
+					this.#iconContextMenu.items[2].checked = true 
+				} else {
+					this.#iconContextMenu.items[2].checked = false;
+				}
+			})
+	}
+
+	#toggleAutoLaunch() {
+		this.#autoLauncher.isEnabled()
+			.then(isEnabled => {
+				if (isEnabled) {
+					this.#autoLauncher.disable()
+						.then(() => this.#checkAutoLaunch())
+				} else {
+					this.#autoLauncher.enable()
+						.then(() => this.#checkAutoLaunch())
+				}
 			})
 	}
 }
